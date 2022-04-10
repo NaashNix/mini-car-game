@@ -1,0 +1,49 @@
+body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+#homeBackgroundImage{
+    height: 100%;
+    width: 100%;
+}
+
+#playButtonIcon{
+    transition: transform 1s ease-in-out;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    cursor: pointer;
+}
+
+#playButtonIcon:hover, #playButtonIcon:focus{
+    transform: rotate(120deg);
+    transition: transform 1s ease-in-out;
+}
+
+#roadImage{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 0;
+}
+
+#carContainer img{
+    position: absolute;
+    height: 12%;
+    z-index: 10;
+}
+
+#startButton{
+    position: absolute;
+    top: 70%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 200px;
+    z-index: 11;
+}
