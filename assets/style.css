@@ -1,49 +1,49 @@
-body{
+*{
     padding: 0;
     margin: 0;
-    box-sizing: border-box;
+    box-sizing: border-box; 
 }
 
-#homeBackgroundImage{
-    height: 100%;
-    width: 100%;
+body{
+    overflow: hidden;
 }
 
-#playButtonIcon{
-    transition: transform 1s ease-in-out;
+.lines{
+    width: 100px;
+    height: 10px;
+    background-color: white;
     position: absolute;
-    left: 0;
-    right: 0;
+    margin-top: 185px;
+    display: inline-block;
+
+}
+
+.gameArea{
+    overflow: hidden;
+    width: 1200px;
+    background-color: #2d3436;
+    height: 400px;
+    margin: auto;
+    position: absolute;
     top: 0;
     bottom: 0;
-    margin: auto;
-    cursor: pointer;
-}
-
-#playButtonIcon:hover, #playButtonIcon:focus{
-    transform: rotate(120deg);
-    transition: transform 1s ease-in-out;
-}
-
-#roadImage{
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: 0;
-}
-
-#carContainer img{
-    position: absolute;
-    height: 12%;
-    z-index: 10;
-}
-
-#startButton{
-    position: absolute;
-    top: 70%;
     left: 0;
     right: 0;
-    margin: auto;
-    width: 200px;
-    z-index: 11;
+    border-top: 7px dashed #c8d6e5;
+    border-bottom: 7px dashed #c8d6e5;
+
 }
+
+#car{
+    position: absolute;
+    z-index: 10;
+    width: 150px;
+    top: 140px;
+    left: 130px;
+
+}
+
+/* #backgroundImage{
+    height: 100vh;
+    width: 100vh;
+} */
