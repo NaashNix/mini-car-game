@@ -1,6 +1,7 @@
 let gameArea = document.querySelector(".gameArea");
 let car = document.querySelector("#car");
 
+makeObstacles();
 
 let height = window.innerHeight;
 let width = window.innerWidth;
@@ -8,6 +9,13 @@ let width = window.innerWidth;
 $("#backgroundImage").css("height", `${height}px `);
 $("#backgroundImage").css("width", `${width}px `);
 
+function makeObstacles() {
+    let obstacle = `<div class="obstacles"> </div>`;
+    // gameArea.append(obstacle);
+    $(".gameArea").append(obstacle);
+}
+
+let stones = document.querySelector(".obstacles");
 
 var roadRunningFunc = setInterval(() => {
     gamePlay();
@@ -58,6 +66,7 @@ function moveLines() {
             item.x = 5;
         }
 
+        
         item.x += 20;
         item.style.right = item.x + 'px';
     })
@@ -76,11 +85,7 @@ function start() {
         gameArea.appendChild(roadLines);
     }
 
-}
-
-function makeObstacles() {
-
-}
+}       
 
 function turnCarLeft() {
     
