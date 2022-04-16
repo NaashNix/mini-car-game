@@ -10,12 +10,33 @@ $("#backgroundImage").css("height", `${height}px `);
 $("#backgroundImage").css("width", `${width}px `);
 
 function makeObstacles() {
-    let obstacle = `<div class="obstacles"> </div>`;
-    // gameArea.append(obstacle);
-    $(".gameArea").append(obstacle);
+    window.requestAnimationFrame(gamePlay);
+
+    for (m = 0; m < 9; m++) {
+        let stoneSet = document.createElement("div");
+        stoneSet.setAttribute("class", "stones");
+        stoneSet.x = (m * 150);
+        console.log(stoneSet.x);
+        stoneSet.style.right = stoneSet.x + 'px';
+        gameArea.appendChild(stoneSet);
+    }
 }
 
-let stones = document.querySelector(".obstacles");
+let stonesList = document.querySelectorAll(".stone");
+
+function moveObstacles(){
+    // let stoneObstacles = document.querySelectorAll(".obstacles");
+    stonesList.forEach(function (item) {    
+        if (item.clientLeft >= 1200) {
+            item.left = 5;
+            console.log("Item.x: ", item.left);
+        }
+        item.left += 20;
+        item.style.right = item.left + 'px';
+        console.log("Item.x: ", item.left);
+    })
+}
+
 
 var roadRunningFunc = setInterval(() => {
     gamePlay();
@@ -65,7 +86,6 @@ function moveLines() {
         if (item.x >= 1200) {
             item.x = 5;
         }
-
         
         item.x += 20;
         item.style.right = item.x + 'px';
