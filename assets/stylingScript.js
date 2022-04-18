@@ -1,5 +1,6 @@
 let gameArea = document.querySelector(".gameArea");
 let car = document.querySelector("#car");
+let stoneContainer = document.querySelector(".stoneContainer");
 
 makeObstacles();
 
@@ -10,37 +11,78 @@ $("#backgroundImage").css("height", `${height}px `);
 $("#backgroundImage").css("width", `${width}px `);
 
 function makeObstacles() {
-    window.requestAnimationFrame(gamePlay);
+    window.requestAnimationFrame(moveObstacles);
 
-    for (m = 0; m < 9; m++) {
-        let stoneSet = document.createElement("div");
-        stoneSet.setAttribute("class", "stones");
-        stoneSet.x = (m * 150);
-        console.log(stoneSet.x);
-        stoneSet.style.right = stoneSet.x + 'px';
-        gameArea.appendChild(stoneSet);
-    }
+    // for (m = 0; m < 4; m++) {
+    //     let distance = Math.floor(Math.random() * 1000);
+    //     let widthDistance = Math.floor(Math.random() * 300);
+    //     console.log("WidthDistance : ",widthDistance);
+    //     let stoneSet = document.createElement("div");
+    //     stoneSet.setAttribute("class", "stone");
+    //     stoneSet.x = distance;
+    //     console.log(stoneSet.x);
+    //     stoneSet.style.right = stoneSet.x + 'px';
+    //     stoneSet.style.top = widthDistance + 'px';
+    //     stoneContainer.appendChild(stoneSet);
+    //}
+
+    let widthDistance = Math.floor(Math.random() * 340);
+    let singleStone = document.createElement("div");
+    singleStone.setAttribute("class", "stone");
+
+    // singleStone.top = `${widthDistance}px !important`;
+    singleStone.setAttribute("style", `top:${widthDistance}px !important`);
+    console.log("Stone.Top : ", singleStone.top);
+    stoneContainer.append(singleStone);
+
+}
+
+
+function gameLogic() {
+    let CAR_obj = document.querySelector("#car");
+    let STONE_obj = document.querySelector(".stone");
+
+    let carBounds = CAR_obj.getBoundingClientRect();
+    let stoneBounds = STONE_obj.getBoundingClientRect();
+
+    let overlapped = (carBounds.top > stoneBounds.bottom ||
+        carBounds.right < stoneBounds.left ||
+        carBounds.bottom < stoneBounds.top ||
+        carBounds.left > stoneBounds.right);
+
+    console.log(overlapped);
+
+
+
 }
 
 let stonesList = document.querySelectorAll(".stone");
 
-function moveObstacles(){
-    // let stoneObstacles = document.querySelectorAll(".obstacles");
-    stonesList.forEach(function (item) {    
-        if (item.clientLeft >= 1200) {
-            item.left = 5;
-            console.log("Item.x: ", item.left);
+function moveObstacles() {
+    let stoneSet = document.querySelectorAll(".stone");
+    stoneSet.forEach(function (item) {
+        console.log("Item.offsetLeft : ", item.offsetLeft);
+        // console.log("Item.style.left : ",);
+        if (item.offsetLeft < -40) {
+            item.style.display = 'none';
+            makeObstacles();
         }
-        item.left += 20;
-        item.style.right = item.left + 'px';
-        console.log("Item.x: ", item.left);
+
+        let value = parseInt(item.offsetLeft);
+        // console.log(value-20);
+        item.style.left = `${parseInt(value - 20)}px`;
+        console.log("Final Item.offsetLeft : ", item.offsetLeft);
+        // console.log("Item.Offset",item.offsetTop);
+
     })
 }
 
 
-var roadRunningFunc = setInterval(() => {
-    gamePlay();
-}, 50);
+// var roadRunningFunc = setInterval(() => {
+//     gamePlay();
+//     moveObstacles();
+//     gameLogic();
+// }, 1000);
 
 
 document.onkeydown = checkKey;
@@ -70,7 +112,7 @@ function checkKey(e) {
 
 }
 
-let j = 0;
+// let j = 0;
 
 function gamePlay() {
     let road = gameArea.getBoundingClientRect();
@@ -84,17 +126,18 @@ function moveLines() {
     let lines = document.querySelectorAll(".lines");
     lines.forEach(function (item) {
         if (item.x >= 1200) {
-            item.x = 5;
+            item.x = -50;
         }
-        
         item.x += 20;
         item.style.right = item.x + 'px';
     })
+
+    // window.requestAnimationFrame(moveLines);
 }
+
 
 function start() {
 
-    window.requestAnimationFrame(gamePlay);
 
     for (m = 0; m < 9; m++) {
         let roadLines = document.createElement("div");
@@ -105,11 +148,13 @@ function start() {
         gameArea.appendChild(roadLines);
     }
 
-}       
+    // moveLines();
+
+    // window.requestAnimationFrame(moveLines);
+
+}
 
 function turnCarLeft() {
-    
-    let road = gameArea.getBoundingClientRect();
 
     var fromBottom = parseInt($("#car").css("top"));
     let roadFromTop = parseInt($(".gameArea").css("top"));
@@ -152,8 +197,8 @@ function carMoveForward() {
 
     var fromLeft = parseInt($("#car").css("left"));
     console.log("From left: ", fromLeft);
-    
-    console.log("Total Width : " ,road.left + 20 + gameArea.clientWidth);
+
+    console.log("Total Width : ", road.left + 20 + gameArea.clientWidth);
 
     if (gameArea.clientWidth - 95 > car.x) {
         fromLeft = fromLeft + 10;
@@ -161,13 +206,13 @@ function carMoveForward() {
     } else {
         console.log("Not Turned");
     }
-    
-    
+
+
     $("#car").css("left", `${fromLeft}px`);
 }
 
 function carMoveBackward() {
-    
+
     let road = gameArea.getBoundingClientRect();
 
     var fromLeft = parseInt($("#car").css("left"));
