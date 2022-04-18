@@ -64,8 +64,9 @@ body{
 .stone{
     margin: auto;
     width: 50px;
+    background-image: url(./images/Fire_New.png);
     height: 50px;
-    background-color: aqua;
+    /* background-color: aqua; */
     position: absolute;
     /* top: 200px; */
     left: 1217px;

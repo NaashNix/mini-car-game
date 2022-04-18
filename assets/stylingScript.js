@@ -103,16 +103,16 @@ function checkKey(e) {
     e = e || window.event;
 
     if (e.keyCode == '38') {
-        carMoveForward();
-    }
-    else if (e.keyCode == '40') {
-        carMoveBackward();
-    }
-    else if (e.keyCode == '37') {
         turnCarRight();
     }
-    else if (e.keyCode == '39') {
+    else if (e.keyCode == '40') {
         turnCarLeft();
+    }
+    else if (e.keyCode == '37') {
+        carMoveBackward();
+    }
+    else if (e.keyCode == '39') {
+        carMoveForward();
     }
 
 }
