@@ -32,7 +32,7 @@ function makeObstacles() {
 
     // singleStone.top = `${widthDistance}px !important`;
     singleStone.setAttribute("style", `top:${widthDistance}px !important`);
-    console.log("Stone.Top : ", singleStone.top);
+    
     stoneContainer.append(singleStone);
 
 }
@@ -50,7 +50,12 @@ function gameLogic() {
         carBounds.bottom < stoneBounds.top ||
         carBounds.left > stoneBounds.right);
 
-    console.log(overlapped);
+        console.log("Overlapped",overlapped);
+
+    if (overlapped == false) {
+        clearInterval(roadRunningFunc);
+        car.style.display = `none`;
+    }
 
 
 
@@ -61,7 +66,7 @@ let stonesList = document.querySelectorAll(".stone");
 function moveObstacles() {
     let stoneSet = document.querySelectorAll(".stone");
     stoneSet.forEach(function (item) {
-        console.log("Item.offsetLeft : ", item.offsetLeft);
+        
         // console.log("Item.style.left : ",);
         if (item.offsetLeft < -40) {
             item.style.display = 'none';
@@ -71,18 +76,18 @@ function moveObstacles() {
         let value = parseInt(item.offsetLeft);
         // console.log(value-20);
         item.style.left = `${parseInt(value - 20)}px`;
-        console.log("Final Item.offsetLeft : ", item.offsetLeft);
+    
         // console.log("Item.Offset",item.offsetTop);
 
     })
 }
 
 
-// var roadRunningFunc = setInterval(() => {
-//     gamePlay();
-//     moveObstacles();
-//     gameLogic();
-// }, 1000);
+var roadRunningFunc = setInterval(() => {
+    gamePlay();
+    moveObstacles();
+    gameLogic();
+}, 60);
 
 
 document.onkeydown = checkKey;
@@ -178,8 +183,6 @@ function turnCarRight() {
     let roadFromTop = parseInt($(".gameArea").css("top"));
     var fromBottom = parseInt($("#car").css("top"));
 
-    console.log("From Bottom: ", fromBottom);
-
     if (fromBottom > roadFromTop + 130) {
         fromBottom = fromBottom - 10;
         $("#car").css("top", `${fromBottom}px`);
@@ -196,10 +199,7 @@ function carMoveForward() {
 
 
     var fromLeft = parseInt($("#car").css("left"));
-    console.log("From left: ", fromLeft);
-
-    console.log("Total Width : ", road.left + 20 + gameArea.clientWidth);
-
+    
     if (gameArea.clientWidth - 95 > car.x) {
         fromLeft = fromLeft + 10;
         $("#car").css("left", `${fromLeft}px`);
@@ -216,13 +216,12 @@ function carMoveBackward() {
     let road = gameArea.getBoundingClientRect();
 
     var fromLeft = parseInt($("#car").css("left"));
-    console.log("From left: ", fromLeft);
 
     if (road.left + 20 < car.x) {
         fromLeft = fromLeft - 10;
         $("#car").css("left", `${fromLeft}px`);
     } else {
-        console.log("Not Turned");
+        
     }
 
 }
