@@ -13,7 +13,6 @@ function moveToGameScreen(){
     roadRunningFunc = setInterval(() => {
         gamePlay();
         moveObstacles();
-        // gameLogic();
     }, 60);
     
     gameLogicFuncRunning = setInterval(() => {
@@ -33,8 +32,6 @@ function makeObstacles() {
     let widthDistance = Math.floor(Math.random() * 340);
     let singleStone = document.createElement("div");
     singleStone.setAttribute("class", "stone");
-
-    // singleStone.top = `${widthDistance}px !important`;
     singleStone.setAttribute("style", `top:${widthDistance}px !important`);
 
     stoneContainer.append(singleStone);
@@ -71,11 +68,18 @@ function gameLogic() {
         clearInterval(roadRunningFunc);
         clearInterval(gameLogicFuncRunning);
         car.style.display = `none`;
+        gameOverFunction();
     }
 
 
 
 }
+
+function gameOverFunction(){
+    $("#game").css('display','none');
+    $("body").append("<h1>GAME OVER</h1>");
+}
+
 
 let stonesList = document.querySelectorAll(".stone");
 
