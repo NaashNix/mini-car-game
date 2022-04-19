@@ -2,7 +2,24 @@ let gameArea = document.querySelector(".gameArea");
 let car = document.querySelector("#car");
 let stoneContainer = document.querySelector(".stoneContainer");
 
-makeObstacles();
+$("#game").css("display",'none');
+var roadRunningFunc;
+var gameLogicFuncRunning;
+
+function moveToGameScreen(){
+    $("#game").css("display",'block');
+    $("#gameStartScreen").css("display",'none');
+    makeObstacles();
+    roadRunningFunc = setInterval(() => {
+        gamePlay();
+        moveObstacles();
+        // gameLogic();
+    }, 60);
+    
+    gameLogicFuncRunning = setInterval(() => {
+        gameLogic();
+    }, 30);
+}
 
 let height = window.innerHeight;
 let width = window.innerWidth;
@@ -12,19 +29,6 @@ $("#backgroundImage").css("width", `${width}px `);
 
 function makeObstacles() {
     window.requestAnimationFrame(moveObstacles);
-
-    // for (m = 0; m < 4; m++) {
-    //     let distance = Math.floor(Math.random() * 1000);
-    //     let widthDistance = Math.floor(Math.random() * 300);
-    //     console.log("WidthDistance : ",widthDistance);
-    //     let stoneSet = document.createElement("div");
-    //     stoneSet.setAttribute("class", "stone");
-    //     stoneSet.x = distance;
-    //     console.log(stoneSet.x);
-    //     stoneSet.style.right = stoneSet.x + 'px';
-    //     stoneSet.style.top = widthDistance + 'px';
-    //     stoneContainer.appendChild(stoneSet);
-    //}
 
     let widthDistance = Math.floor(Math.random() * 340);
     let singleStone = document.createElement("div");
@@ -52,7 +56,16 @@ function gameLogic() {
         carBounds.bottom < stoneBounds.top ||
         carBounds.left > stoneBounds.right);
 
-    // console.log("Overlapped", overlapped);
+        console.log("carBounds.top : ",carBounds.top);
+        console.log("stoneBounds.top : ",stoneBounds.top);
+        console.log("carBounds.bottom : ",carBounds.bottom);
+        console.log("stoneBounds.bottom : ",stoneBounds.bottom);
+        console.log("-----------------------------------");
+        console.log("carBounds.left : ",carBounds.left);
+        console.log("stoneBounds.left : ",stoneBounds.left);
+        console.log("carBounds.right : ",carBounds.right);
+        console.log("stoneBounds.right : ",stoneBounds.right);
+
 
     if (overlapped == false) {
         clearInterval(roadRunningFunc);
@@ -72,40 +85,21 @@ function moveObstacles() {
 
         // console.log("Item.style.left : ",);
         if (item.offsetLeft < -40) {
-            item.style.display = 'none';
+            item.remove();
             makeObstacles();
         }
 
         let value = parseInt(item.offsetLeft);
-        // console.log(value-20);
+        
         item.style.left = `${parseInt(value - 20)}px`;
-
-        // console.log("Item.Offset",item.offsetTop);
 
     })
 }
 
 
-var roadRunningFunc = setInterval(() => {
-    gamePlay();
-    moveObstacles();
-    // gameLogic();
-}, 60);
-
-var gameLogicFuncRunning = setInterval(() => {
-    gameLogic();
-}, 30);
-
-
 document.onkeydown = checkKey;
 start();
 function checkKey(e) {
-
-    // let value = $("#gameSection").css("display");
-
-    // if (value != 'block') {
-    //     return;
-    // }
 
     e = e || window.event;
 
