@@ -2,9 +2,12 @@ let gameArea = document.querySelector(".gameArea");
 let car = document.querySelector("#car");
 let stoneContainer = document.querySelector(".stoneContainer");
 
+
 $("#game").css("display",'none');
 var roadRunningFunc;
 var gameLogicFuncRunning;
+
+moveToGameScreen();
 
 function moveToGameScreen(){
     $("#game").css("display",'block');
@@ -74,12 +77,19 @@ function gameLogic() {
 
 
 }
-
+ 
 function gameOverFunction(){
     $("#game").css('display','none');
-    $("body").append("<h1>GAME OVER</h1>");
+    // $("body").append("<h1>GAME OVER</h1>");
+    $("body").append(gameOverScreenCom());
 }
 
+function  gameOverScreenCom() {
+    return (`<section class="gameOverScreen">
+        <h1>GAME OVER</h1>
+        <button>Retry</button>
+    </section>`);
+}
 
 let stonesList = document.querySelectorAll(".stone");
 
@@ -194,8 +204,6 @@ function turnCarRight() {
     } else {
 
     }
-
-
 
 }
 
